@@ -8,24 +8,28 @@ class SleepStore: ObservableObject, Observable {
     
     func addSleepData (sleep: Sleep) {
         sleepData.append(sleep)
-        sleepData.sort{$0.sleepDate < $1.sleepDate}
+        sleepData.sort{$0.sleepDate > $1.sleepDate}
+        saveSleepDataToUserDefaults()
     }
     
-    func deleteSleepData (sleep: Sleep) {
-        sleepData.removeAll{ $0.id == sleep.id }
-        sleepData.sort{$0.sleepDate < $1.sleepDate}
+    func deleteSleepData (sleep: Sleep.ID?) {
+        sleepData.removeAll{ $0.id == sleep }
+        sleepData.sort{$0.sleepDate > $1.sleepDate}
+        saveSleepDataToUserDefaults()
     }
     
     func deleteSleepDatas (sleeps: [Sleep]) {
         for s in sleeps {
             sleepData.removeAll{ $0.id == s.id }
         }
-        sleepData.sort{$0.sleepDate < $1.sleepDate}
+        sleepData.sort{$0.sleepDate > $1.sleepDate}
+        saveSleepDataToUserDefaults()
     }
     
     func updateSleepData (sleep: Sleep) {
         sleepData.removeAll{ $0.id == sleep.id}
-        sleepData.sort{$0.sleepDate < $1.sleepDate}
+        sleepData.sort{$0.sleepDate > $1.sleepDate}
+        saveSleepDataToUserDefaults()
     }
     
 }
@@ -52,7 +56,6 @@ extension SleepStore { //For Edge Case
         } else {
             return false
         }
-        
     }
 }
 
@@ -69,7 +72,6 @@ extension SleepStore { //For UserDefault
         } else {
             print("Error while decode to Data")
         }
-        
         return []
     }
     

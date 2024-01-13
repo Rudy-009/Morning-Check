@@ -21,16 +21,35 @@ struct SleepQualityToken: View {
     
     var sleepQualityRaw: SleepQuality
     @Binding var sleepQuality: SleepQuality?
+    var qualityColor: Color {
+        get {
+            switch sleepQuality {
+            case .Refreshed:
+                return .blue
+            case .Invigorated:
+                return .green
+            case .Groggy:
+                return .yellow
+            case .Sluggish:
+                return .orange
+            case .Unrested:
+                return .red
+            case nil:
+                return .primary
+            }
+        }
+    }
     
     var body: some View {
         Button(action: {
             sleepQuality = sleepQuality != sleepQualityRaw ? sleepQualityRaw : nil
         }, label: {
-            ZStack{
-                if sleepQuality == sleepQualityRaw {
+            ZStack {
+                if sleepQuality == sleepQualityRaw { //Selected
                     Circle()
-                        .foregroundColor(.blue)
+                        .foregroundColor(qualityColor)
                         .frame(width: 30)
+                    Text("\(sleepQualityRaw.rawValue)")
                 }
                 Text("\(sleepQualityRaw.rawValue)")
             }

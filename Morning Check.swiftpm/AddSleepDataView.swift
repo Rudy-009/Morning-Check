@@ -81,10 +81,8 @@ struct AddSleepDataView: View {
                 )
             }
             .alert(isPresented: $isShowNonlogicalAlert) {
-                Alert(
-                    title: Text("Overlap Detected"),
-                    message: Text("New sleep entry conflicts with previous records. Please Check your time again")
-                )
+                Alert( title: Text("Overlap Detected"),
+                    message: Text("New sleep entry conflicts with previous records. Please Check your time again"))
             }
             .tabViewStyle(PageTabViewStyle())
             .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .interactive))

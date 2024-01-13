@@ -5,13 +5,22 @@ struct MainView: View {
     
     @EnvironmentObject private var sleepStore: SleepStore
     @State private var isShownSheet: Bool = false
+    @State private var selected: Sleep.ID?
     
     var body: some View {
         NavigationStack {
             VStack {
-                SleepDataTableView(sleepData: $sleepStore.sleepData)
+                SleepDataTableView(selected: $selected)
             }
             .toolbar {
+                Button {
+                    sleepStore.deleteSleepData(sleep: selected)
+                    selected = nil
+                } label: {
+                    Label("Delete Selected Data", systemImage: "trash")
+                }
+                .disabled(selected == nil)
+                
                 Button {
                     self.isShownSheet = true
                 } label: {
@@ -21,6 +30,7 @@ struct MainView: View {
                     AddSleepDataView(isShownSheet: $isShownSheet)
                 }
                 .presentationDetents([.medium, .large])
+                
             }
             .onAppear{
                 sleepStore.getSleepDataFromUserDefaults()
@@ -31,12 +41,13 @@ struct MainView: View {
 
 struct SleepDataTableView: View {
     
-    @Binding var sleepData: [Sleep]
-    @State private var selected: Sleep.ID?
+    @EnvironmentObject private var sleepStore: SleepStore
+    
+    @Binding var selected: Sleep.ID?
     
     var body: some View {
         VStack {
-            Table(sleepData, selection: $selected) {
+            Table(sleepStore.sleepData, selection: $selected) {
                 TableColumn("Quality", value: \.sleepQuality.rawValue)
                 TableColumn("Sleep") { sleep in
                     Text("\(sleep.sleepDate.formatted(date: .numeric, time: .shortened))")
