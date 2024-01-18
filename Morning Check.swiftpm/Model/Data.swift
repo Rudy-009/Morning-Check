@@ -6,7 +6,7 @@ struct Sleep : Identifiable, Codable {
     var id = UUID()
     var sleepDate: Date
     var wakeUpDate: Date
-    var sleepQuality: SleepQuality
+    var sleepQuality: Int
 }
 
 enum SleepQuality: String, Codable {

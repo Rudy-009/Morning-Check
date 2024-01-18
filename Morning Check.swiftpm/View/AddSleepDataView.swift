@@ -6,23 +6,16 @@ struct AddSleepDataView: View {
     let pages: Int = 3
     
     @EnvironmentObject private var sleepStore: SleepStore
+    
     @State private var tabIndex: Int = 0
     @State private var isShowCompareAlert: Bool = false
     @State private var isShowNonlogicalAlert: Bool = false
-    @Binding var isShownSheet: Bool
+    
     @State var sleepDate: Date = Calendar.current.date(byAdding: .day, value: -1, to: Date())! //Yesterday
     @State var wakeUpDate: Date = Date() //Today
-    @State var sleepQuality: SleepQuality?
+    @State var sleepQuality: Int = 3
     
-    var isDoneAble: Bool {
-        get {
-            if sleepQuality != nil { //모든 정보가 잘 받아졌다는 가정 하에
-                return false
-            } else {
-                return true
-            }
-        }
-    }
+    @Binding var isShownSheet: Bool
     
     var body: some View {
         VStack{
@@ -30,7 +23,7 @@ struct AddSleepDataView: View {
                 TabView(selection: $tabIndex){
                     SleepDateSelectionView(sleepDate: $sleepDate).tag(0)
                     WakeUpDateSelectionView(wakeUpDate: $wakeUpDate).tag(1)
-                    SleepQualitySelectionView(sleepQuality: $sleepQuality).tag(2)
+                    SleepQualityEditView(sleepQuality: $sleepQuality, size: 300).tag(2)
                 }
                 .toolbar {
                     ToolbarItemGroup(placement: .bottomBar) { // <-
@@ -41,8 +34,8 @@ struct AddSleepDataView: View {
                             Button("Done") {
                                 //Save at store
                                 //if sleep time is available
-                                if sleepStore.isNotOverlapped(new: Sleep(sleepDate: sleepDate, wakeUpDate: wakeUpDate, sleepQuality: sleepQuality!)) {
-                                   sleepStore.addSleepData( sleep: Sleep(sleepDate: sleepDate, wakeUpDate: wakeUpDate, sleepQuality: sleepQuality!))
+                                if sleepStore.isNotOverlapped(new: Sleep(sleepDate: sleepDate, wakeUpDate: wakeUpDate, sleepQuality: sleepQuality)) {
+                                   sleepStore.addSleepData( sleep: Sleep(sleepDate: sleepDate, wakeUpDate: wakeUpDate, sleepQuality: sleepQuality))
                                     sleepStore.saveSleepDataToUserDefaults()
                                     //Pop sheet
                                     isShownSheet = false
@@ -51,7 +44,6 @@ struct AddSleepDataView: View {
                                     tabIndex = 0
                                 }
                             }
-                            .disabled(isDoneAble)
                         }
                     }
                 }

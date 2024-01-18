@@ -5,6 +5,7 @@ struct MainView: View {
     
     @EnvironmentObject private var sleepStore: SleepStore
     @State private var isShownSheet: Bool = false
+    @State private var isShownGoalSheet: Bool = false
     @State private var selected: Sleep.ID?
     
     var body: some View {
@@ -13,6 +14,15 @@ struct MainView: View {
                 SleepDataTableView(selected: $selected)
             }
             .toolbar {
+                Button {
+                    isShownGoalSheet = true
+                } label: {
+                    Label("Set Goal View", systemImage: "trophy")
+                }
+                .sheet(isPresented: $isShownGoalSheet) {
+                    EditGoalView(goalDate: sleepStore.targetWakeUpTime, isShownGoalSheet: $isShownGoalSheet)
+                }
+                
                 Button {
                     sleepStore.deleteSleepData(sleep: selected)
                     selected = nil
@@ -49,13 +59,7 @@ struct SleepDataTableView: View {
         VStack {
             Table(sleepStore.sleepData, selection: $selected) {
                 TableColumn("Quality") { sleep in
-                    if selected != sleep.id {
-                        Text("\(sleep.sleepQuality.rawValue)")
-                            .foregroundStyle(qColor(sleep.sleepQuality))
-                    } else {
-                        Text("\(sleep.sleepQuality.rawValue)")
-                            .foregroundStyle(.white)
-                    }
+                    SingleBattery(num: sleep.sleepQuality)
                 }
                 TableColumn("Sleep") { sleep in
                     if selected != sleep.id {
@@ -76,20 +80,4 @@ struct SleepDataTableView: View {
             }
         }
     }
-    
-    func qColor(_ q: SleepQuality)-> Color {
-        switch q {
-        case .Refreshed:
-            return .blue
-        case .Invigorated:
-            return .green
-        case .Groggy:
-            return .yellow
-        case .Sluggish:
-            return .orange
-        case .Unrested:
-            return .red
-        }
-    }
-    
 }

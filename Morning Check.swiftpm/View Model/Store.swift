@@ -102,10 +102,12 @@ extension SleepStore { //For UserDefault
 extension SleepStore { //For Compare
     
     func editTargetWakeUpTime(_ date: Date) {
+        
         var targetComponents = calendar.dateComponents([.hour, .minute], from: targetWakeUpTime)
         let components = calendar.dateComponents([.hour, .minute], from: date)
+        
         targetComponents.hour = components.hour
-        targetComponents.minute = targetComponents.minute
+        targetComponents.minute = components.minute
         
         targetWakeUpTime = calendar.date(from: targetComponents) ?? Date()
     }
