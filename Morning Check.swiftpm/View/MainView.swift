@@ -73,17 +73,17 @@ struct SleepDataTableView: View {
                 }
                 TableColumn("Sleep") { sleep in
                     if selected != sleep.id {
-                        Text("\(sleep.sleepDate.formatted(date: .numeric, time: .shortened))")
+                        Text("\(sleepStore.returnFormatted(sleep.sleepDate))")
                     } else {
-                        Text("\(sleep.sleepDate.formatted(date: .numeric, time: .shortened))")
+                        Text("\(sleepStore.returnFormatted(sleep.sleepDate))")
                             .foregroundStyle(.white)
                     }
                 }
                 TableColumn("WakeUp") { sleep in
                     if selected != sleep.id {
-                        Text("\(sleep.wakeUpDate.formatted(date: .numeric, time: .shortened))"+"\(sleepStore.isBefore(sleep.wakeUpDate) ? "🏆" : "")")
+                        Text("\(sleepStore.returnFormatted(sleep.wakeUpDate))"+"\(sleepStore.isBefore(sleep.wakeUpDate) ? "🏆" : "")")
                     } else {
-                        Text("\(sleep.wakeUpDate.formatted(.dateTime))"+"\(sleepStore.isBefore(sleep.wakeUpDate) ? "🏆" : "")")
+                        Text("\(sleepStore.returnFormatted(sleep.wakeUpDate))"+"\(sleepStore.isBefore(sleep.wakeUpDate) ? "🏆" : "")")
                             .foregroundStyle(.white)
                     }
                 }

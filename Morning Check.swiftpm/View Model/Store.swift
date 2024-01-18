@@ -41,16 +41,15 @@ class SleepStore: ObservableObject, Observable {
         saveSleepDataToUserDefaults()
     }
     
-    
 }
 
 extension SleepStore { //For Sleep DateFormat
     
-    func returnDate() -> (wakeUp: String, sleep: String) {
+    func returnFormatted(_ date: Date) -> String {
         
-        dateFormatter.dateFormat = ""
+        dateFormatter.dateFormat = "MM-dd HH:mm a"
         
-        return ("","")
+        return dateFormatter.string(from: date)
     }
 }
 
