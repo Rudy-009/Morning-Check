@@ -19,7 +19,7 @@ struct MainView: View {
                 Button {
                     selected = nil
                 } label: {
-                    Label("cancle selection", systemImage: "checkmark.circle")
+                    Label("cancle selection", systemImage: "x.circle")
                 }
                 .disabled(selected == nil)
                 
@@ -72,24 +72,16 @@ struct SleepDataTableView: View {
                     SingleBattery(num: sleep.sleepQuality)
                 }
                 TableColumn("Sleep") { sleep in
-                    if selected != sleep.id {
-                        Text("\(sleepStore.returnFormatted(sleep.sleepDate))")
-                    } else {
-                        Text("\(sleepStore.returnFormatted(sleep.sleepDate))")
-                            .foregroundStyle(.white)
-                    }
+                    Text("\(sleepStore.returnFormatted(sleep.sleepDate))")
+                        .foregroundStyle(selected == sleep.id ? .white : .gray)
                 }
                 TableColumn("WakeUp") { sleep in
-                    if selected != sleep.id {
-                        Text("\(sleepStore.returnFormatted(sleep.wakeUpDate))"+"\(sleepStore.isBefore(sleep.wakeUpDate) ? "🏆" : "")")
-                    } else {
-                        Text("\(sleepStore.returnFormatted(sleep.wakeUpDate))"+"\(sleepStore.isBefore(sleep.wakeUpDate) ? "🏆" : "")")
-                            .foregroundStyle(.white)
-                    }
+                    Text("\(sleepStore.returnFormatted(sleep.wakeUpDate))"+"\(sleepStore.isBefore(sleep.wakeUpDate) ? "🏆" : "")")
+                        .foregroundStyle(selected == sleep.id ? .white : .gray)
                 }
-//                TableColumn("WakeUp") { sleep in
-//                    
-//                }
+                TableColumn("Duration") { sleep in
+                    Text("\(sleep.sleepDurationHours)H : \(sleep.sleepDurationMinutes)M")
+                }
             }
         }
     }

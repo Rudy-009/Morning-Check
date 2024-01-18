@@ -4,7 +4,6 @@ import SwiftUI
 struct SleepQualityEditView: View {
     
     @Binding var sleepQuality: Int
-    var size: Int
     
     var body: some View {
         VStack {
@@ -40,6 +39,8 @@ struct SleepQualityEditView: View {
             }
         }
     }
+    
+    var size: Int
     
     var batteryImage : String {
         get {

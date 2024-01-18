@@ -7,7 +7,16 @@ struct Sleep : Identifiable, Codable {
     var sleepDate: Date
     var wakeUpDate: Date
     var sleepQuality: Int
-    var sleepDuration: Int = 0
+    
+    var sleepDuration: Double {
+        return wakeUpDate.timeIntervalSince(sleepDate)
+    }
+    var sleepDurationHours: Int {
+        return Int(sleepDuration/3600)
+    }
+    var sleepDurationMinutes: Int {
+        return (Int(sleepDuration)%3600)/60
+    }
 }
 
 enum SleepQuality: String, Codable {

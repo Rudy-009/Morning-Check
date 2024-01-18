@@ -41,11 +41,11 @@ class SleepStore: ObservableObject, Observable {
         saveSleepDataToUserDefaults()
     }
     
-    func sleepDurationIs (sleep: Sleep) -> Int {
+    func sleepDurationIs (sleep sleepDate: Date, wake wakeUpDate: Date ) -> Int {
         
+        let duration = Int(wakeUpDate.timeIntervalSince(sleepDate))
         
-        
-        return 0
+        return duration
     }
     
 }
