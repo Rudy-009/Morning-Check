@@ -2,9 +2,17 @@
 import Foundation
 
 class SleepStore: ObservableObject, Observable {
-    @Published var sleepData: [Sleep] = []
+    let calendar = Calendar.current
     
-    init() {}
+    @Published var sleepData: [Sleep] = []
+    @Published var targetWakeUpTime: Date = Date()
+    
+    init() {
+        var components = DateComponents()
+        components.hour = 10
+        components.minute = 0
+        targetWakeUpTime = calendar.date(from: components) ?? Date()
+    }
     
     func addSleepData (sleep: Sleep) {
         sleepData.append(sleep)
@@ -87,6 +95,37 @@ extension SleepStore { //For UserDefault
     func getSleepDataFromUserDefaults() {
         self.sleepData = loadSleepDatasFromUserDefaults()
         //print("Result : \(self.sleepData)")
+    }
+    
+}
+
+extension SleepStore { //For Compare
+    
+    func editTargetWakeUpTime(_ date: Date) {
+        var targetComponents = calendar.dateComponents([.hour, .minute], from: targetWakeUpTime)
+        let components = calendar.dateComponents([.hour, .minute], from: date)
+        targetComponents.hour = components.hour
+        targetComponents.minute = targetComponents.minute
+        
+        targetWakeUpTime = calendar.date(from: targetComponents) ?? Date()
+    }
+    
+    func isBefore(_ date: Date) -> Bool {
+        let targetComponents = calendar.dateComponents([.hour, .minute], from: targetWakeUpTime)
+        let wakeUpComponents = calendar.dateComponents([.hour, .minute], from: date)
+        
+        if let tH = targetComponents.hour, let wH = wakeUpComponents.hour,
+           let tM = targetComponents.minute, let wM = wakeUpComponents.minute
+        {
+            if wH < tH || (wH == tH && wM <= tM) {
+                return true
+            }
+        }
+        else {
+            print("nil was found from dateComponents!! Store.swift")
+        }
+        
+        return false
     }
     
 }
