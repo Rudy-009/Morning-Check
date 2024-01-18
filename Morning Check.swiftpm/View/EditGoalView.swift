@@ -1,15 +1,10 @@
-//
-//  SwiftUIView.swift
-//  
-//
-//  Created by 이승준 on 1/18/24.
-//
 
 import SwiftUI
 
 struct EditGoalView: View {
     
     @EnvironmentObject private var sleepStore: SleepStore
+    @EnvironmentObject private var notiManager: NotificationManager
     
     @State var goalDate: Date
     @Binding var isShownGoalSheet: Bool
@@ -23,6 +18,7 @@ struct EditGoalView: View {
             .labelsHidden().datePickerStyle(WheelDatePickerStyle())
             Button {
                 sleepStore.editTargetWakeUpTime(goalDate)
+                notiManager.addNotificationAtGoalTime(with: goalDate)
                 isShownGoalSheet = false
             } label: {
                 Text("Done")

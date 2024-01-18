@@ -1,8 +1,9 @@
 
-import Foundation
+import SwiftUI
 
 class SleepStore: ObservableObject, Observable {
     let calendar = Calendar.current
+    let dateFormatter = DateFormatter()
     
     @Published var sleepData: [Sleep] = []
     @Published var targetWakeUpTime: Date = Date()
@@ -40,6 +41,17 @@ class SleepStore: ObservableObject, Observable {
         saveSleepDataToUserDefaults()
     }
     
+    
+}
+
+extension SleepStore { //For Sleep DateFormat
+    
+    func returnDate() -> (wakeUp: String, sleep: String) {
+        
+        dateFormatter.dateFormat = ""
+        
+        return ("","")
+    }
 }
 
 extension SleepStore { //For Edge Case

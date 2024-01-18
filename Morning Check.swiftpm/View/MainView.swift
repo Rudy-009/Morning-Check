@@ -4,6 +4,8 @@ import SwiftUI
 struct MainView: View {
     
     @EnvironmentObject private var sleepStore: SleepStore
+    @EnvironmentObject private var noticenter: NotificationManager
+    
     @State private var isShownSheet: Bool = false
     @State private var isShownGoalSheet: Bool = false
     @State private var selected: Sleep.ID?
@@ -14,6 +16,13 @@ struct MainView: View {
                 SleepDataTableView(selected: $selected)
             }
             .toolbar {
+                Button {
+                    selected = nil
+                } label: {
+                    Label("cancle selection", systemImage: "checkmark.circle")
+                }
+                .disabled(selected == nil)
+                
                 Button {
                     isShownGoalSheet = true
                 } label: {
@@ -44,6 +53,7 @@ struct MainView: View {
             }
             .onAppear{
                 sleepStore.getSleepDataFromUserDefaults()
+                noticenter.requestNotiAuthorization()
             }
         }
     }
@@ -77,6 +87,9 @@ struct SleepDataTableView: View {
                             .foregroundStyle(.white)
                     }
                 }
+//                TableColumn("WakeUp") { sleep in
+//                    
+//                }
             }
         }
     }

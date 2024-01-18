@@ -1,9 +1,3 @@
-//
-//  BatteryView.swift
-//  Morning Check
-//
-//  Created by 이승준 on 1/18/24.
-//
 
 import SwiftUI
 
