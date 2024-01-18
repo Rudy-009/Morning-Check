@@ -9,6 +9,7 @@ struct MainView: View {
     @State private var isShownSheet: Bool = false
     @State private var isShownGoalSheet: Bool = false
     @State private var selected: Sleep.ID?
+    @State private var notificationToggle: Bool = true
     
     var body: some View {
         NavigationStack {
@@ -16,6 +17,17 @@ struct MainView: View {
                 SleepDataTableView(selected: $selected)
             }
             .toolbar {
+                Button {
+                    notificationToggle.toggle()
+                    if notificationToggle { //Add Notification Again
+                        noticenter.addNotificationAtGoalTime(with: sleepStore.targetWakeUpTime)
+                    } else { //Remove All Notification
+                        noticenter.deleteAllNotifications()
+                    }
+                } label: {
+                    Label("Notification Toggle", systemImage: notificationToggle ? "bell.fill" : "bell.slash")
+                }
+                
                 Button {
                     selected = nil
                 } label: {
@@ -53,6 +65,7 @@ struct MainView: View {
             }
             .onAppear{
                 sleepStore.getSleepDataFromUserDefaults()
+                sleepStore.getTargetDateFromUserDefaults()
                 noticenter.requestNotiAuthorization()
             }
         }

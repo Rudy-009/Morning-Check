@@ -96,7 +96,7 @@ extension SleepStore { //For UserDefault
                 print("Error while decode to [Sleep]")
             }
         } else {
-            print("Error while decode to Data")
+            print("Error while decode to Sleep Data")
         }
         return []
     }
@@ -110,10 +110,37 @@ extension SleepStore { //For UserDefault
         //print("Save SleepData Succeed \(self.sleepData)")
     }
     
+    func loadTargetdateFromUserDefaults() -> Date {
+        if let savedData = UserDefaults.standard.object(forKey: "TargetDate") as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode(Date.self, from: savedData) {
+                return savedObject
+            } else {
+                print("Error while decode to [Sleep]")
+            }
+        } else {
+            print("Error while decode to Target Data")
+        }
+        return Date()
+    }
+    
+    func saveTargetDateToUserDefaults() {
+        let encoder = JSONEncoder()
+        /// encoded is Data format
+        if let encoded = try? encoder.encode(self.targetWakeUpTime) {
+            UserDefaults.standard.setValue(encoded, forKey: "TargetDate")
+        }
+    }
+    
     func getSleepDataFromUserDefaults() {
         self.sleepData = loadSleepDatasFromUserDefaults()
-        //print("Result : \(self.sleepData)")
     }
+    
+    func getTargetDateFromUserDefaults() {
+        self.targetWakeUpTime = loadTargetdateFromUserDefaults()
+    }
+    
+    
     
 }
 
@@ -128,6 +155,7 @@ extension SleepStore { //For Compare
         targetComponents.minute = components.minute
         
         targetWakeUpTime = calendar.date(from: targetComponents) ?? Date()
+        saveTargetDateToUserDefaults()
     }
     
     func isBefore(_ date: Date) -> Bool {
