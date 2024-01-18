@@ -41,6 +41,13 @@ class SleepStore: ObservableObject, Observable {
         saveSleepDataToUserDefaults()
     }
     
+    func sleepDurationIs (sleep: Sleep) -> Int {
+        
+        
+        
+        return 0
+    }
+    
 }
 
 extension SleepStore { //For Sleep DateFormat
