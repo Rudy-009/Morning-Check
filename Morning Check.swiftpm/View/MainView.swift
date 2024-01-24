@@ -8,16 +8,26 @@ struct MainView: View {
     
     @State private var isShownSheet: Bool = false
     @State private var isShownGoalSheet: Bool = false
+    @State private var isChartOpen: Bool = false
     @State private var selected: Sleep.ID?
     @State private var notificationToggle: Bool = true
     
     var body: some View {
         NavigationStack {
             VStack {
-                SleepDataTableView(selected: $selected)
+                SleepDataTableView(selected: $selected.animation(.easeInOut))
             }
             .toolbar {
                 Button {
+                    isChartOpen = true
+                } label: {
+                    Label("Open Chart", systemImage: "chart.bar.xaxis.ascending.badge.clock")
+                }
+                .sheet(isPresented: $isChartOpen, content: {
+                    SwiftChartsA()
+                })
+                
+                Button { //Notification Toggle
                     notificationToggle.toggle()
                     if notificationToggle { //Add Notification Again
                         noticenter.addNotificationAtGoalTime(with: sleepStore.targetWakeUpTime)
@@ -28,14 +38,14 @@ struct MainView: View {
                     Label("Notification Toggle", systemImage: notificationToggle ? "bell.fill" : "bell.slash")
                 }
                 
-                Button {
+                Button { //Cancel Selection
                     selected = nil
                 } label: {
-                    Label("cancle selection", systemImage: "x.circle")
+                    Label("cancel selection", systemImage: "x.circle")
                 }
                 .disabled(selected == nil)
                 
-                Button {
+                Button { //Edit Goal Data
                     isShownGoalSheet = true
                 } label: {
                     Label("Set Goal View", systemImage: "trophy")
@@ -43,8 +53,9 @@ struct MainView: View {
                 .sheet(isPresented: $isShownGoalSheet) {
                     EditGoalView(goalDate: sleepStore.targetWakeUpTime, isShownGoalSheet: $isShownGoalSheet)
                 }
+                .presentationDetents([.medium])
                 
-                Button {
+                Button { //Delete Button
                     sleepStore.deleteSleepData(sleep: selected)
                     selected = nil
                 } label: {
@@ -52,7 +63,7 @@ struct MainView: View {
                 }
                 .disabled(selected == nil)
                 
-                Button {
+                Button { //Add Sleep Data Button
                     self.isShownSheet = true
                 } label: {
                     Label("Add Sleep", systemImage: "plus")
@@ -61,12 +72,6 @@ struct MainView: View {
                     AddSleepDataView(isShownSheet: $isShownSheet)
                 }
                 .presentationDetents([.medium, .large])
-                
-            }
-            .onAppear{
-                sleepStore.getSleepDataFromUserDefaults()
-                sleepStore.getTargetDateFromUserDefaults()
-                noticenter.requestNotiAuthorization()
             }
         }
     }
@@ -94,6 +99,9 @@ struct SleepDataTableView: View {
                 }
                 TableColumn("Duration") { sleep in
                     Text("\(sleep.sleepDurationHours)H : \(sleep.sleepDurationMinutes)M")
+                }
+                TableColumn("Distruptions") { sleep in
+                    Text("\(sleep.emojis)")
                 }
             }
         }

@@ -12,6 +12,12 @@ struct MyApp: App {
             MainView()
                 .environmentObject(sleepStore)
                 .environmentObject(noticenter)
+                .onAppear{
+                    sleepStore.getSleepDataFromUserDefaults()
+                    sleepStore.getTargetDateFromUserDefaults()
+                    print(sleepStore.loadSleepDatasFromUserDefaults())
+                    noticenter.requestNotiAuthorization()
+            }
         }
     }
 }

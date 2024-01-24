@@ -28,7 +28,7 @@ struct SingleBattery: View {
         get {
             switch num {
             case 0:
-                return (.black, SleepQuality.Unrested.rawValue)
+                return ( Color("darkMode") , SleepQuality.Unrested.rawValue)
             case 1:
                 return (.red, SleepQuality.Sluggish.rawValue)
             case 2:

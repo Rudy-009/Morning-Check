@@ -4,15 +4,27 @@ import SwiftUI
 class SleepStore: ObservableObject, Observable {
     let calendar = Calendar.current
     let dateFormatter = DateFormatter()
+    var components = DateComponents()
     
     @Published var sleepData: [Sleep] = []
     @Published var targetWakeUpTime: Date = Date()
     
+    var targetWakeUpTimeHourMinute: String {
+        return ""
+    }
+    
+    var targetMarkWakeUp: Date {
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.hour, .minute], from: targetWakeUpTime)
+        return Calendar.current.date(from: DateComponents( hour: dateComponents.hour, minute: dateComponents.minute)) ?? Date()
+    }
+    
+    var targetMarkSleep: Date {
+        return Date(timeInterval: -(8*60*60), since: targetMarkWakeUp)
+    }
+    
     init() {
-        var components = DateComponents()
-        components.hour = 10
-        components.minute = 0
-        targetWakeUpTime = calendar.date(from: components) ?? Date()
+        targetWakeUpTime = loadTargetdateFromUserDefaults()
     }
     
     func addSleepData (sleep: Sleep) {
@@ -46,6 +58,14 @@ class SleepStore: ObservableObject, Observable {
         let duration = Int(wakeUpDate.timeIntervalSince(sleepDate))
         
         return duration
+    }
+    
+    func noMoreOptional() {
+        for index in 0...sleepData.count-1 {
+            sleepData[index].distruptors = []
+            sleepData[index].awakes = 0
+        }
+        saveSleepDataToUserDefaults()
     }
     
 }
