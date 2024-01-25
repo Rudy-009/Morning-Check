@@ -17,8 +17,11 @@ struct MainChartView: View {
         ScrollView {
             BasicChartView()
                 .padding()
-            DurationAndQualityView()
+            DistruptorsAndQualityView()
                 .padding()
+        }
+        .onAppear{
+            chartStore.updateDistruptorsAndQuality()
         }
     }
 }

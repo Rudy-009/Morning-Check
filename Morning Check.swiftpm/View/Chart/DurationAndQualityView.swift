@@ -1,6 +1,6 @@
 //
 //  SwiftUIView.swift
-//  
+//
 //
 //  Created by 이승준 on 1/25/24.
 //
@@ -15,41 +15,36 @@ struct DurationAndQualityView: View {
     
     var body: some View {
         VStack {
-            Chart {
-                ForEach(chartStore.distruptorAndQualityArray) { token in
+            Text("Correlation with Duration and Quality")
+            
+            Chart{
+                ForEach(chartStore.durationAndQualityArray){ token in
+                    
+                    // 시:분 형식으로 시간을 나타내기 위한 코드
                     BarMark(
-                        x: .value("average", token.averageByDistruptors),
-                        y: .value("distruptors", token.distruptor.rawValue + " " +
-                                  distruptorEmoji(of: token.distruptor))
+                        x: .value("Quality", token.quality),
+                        y: .value("Average", token.average)
                     )
-                    .foregroundStyle(qualityColorDouble(token.averageByDistruptors))
+                    .foregroundStyle(qualityColor(token.quality))
                 }
             }
-            .chartXScale(domain: 0.0...4.0)
+            .chartPlotStyle { plotArea in
+                plotArea.frame(height: 200)
+            }
+            
+            Chart{
+                ForEach(chartStore.durationAndQualityArray){ token in
+                    PointMark (
+                        x: .value("Quality", token.quality ) ,
+                        y: .value("Average",  token.average)
+                    )
+                    .foregroundStyle(qualityColor(token.quality))
+                }
+            }
             .chartPlotStyle { plotArea in
                 plotArea.frame(height: 200)
             }
         }
-        .onAppear{
-            chartStore.updateForDistruptorsAndQualityView()
-        }
-    }
-}
-
-func qualityColorDouble(_ num: Double) -> Color {
-    switch num {
-    case 0.0..<1.0:
-        return Color("darkMode")
-    case 1.0..<2.0:
-        return .red
-    case 2.0..<3.0:
-        return .yellow
-    case 3.0..<4.0:
-        return .green
-    case 4.0:
-        return .blue
-    default:
-        return .black
     }
 }
 

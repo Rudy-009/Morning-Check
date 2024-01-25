@@ -15,6 +15,8 @@ struct BasicChartView: View {
     
     var body: some View {
         VStack {
+            Text("Sleep Pattern with Sleep Quality")
+                .font(.system(size: 20))
             Chart {
                 ForEach (sleepStore.sleepData) { sleep in
                     BarMark ( //Chart content that represents data using a single horizontal or vertical rule.
