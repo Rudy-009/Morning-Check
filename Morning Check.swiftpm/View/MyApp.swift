@@ -5,18 +5,21 @@ import SwiftUI
 struct MyApp: App {
     
     let sleepStore = SleepStore()
+    let chartStore = ChartStore()
     let noticenter = NotificationManager()
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainSplitView()
                 .environmentObject(sleepStore)
                 .environmentObject(noticenter)
+                .environmentObject(chartStore)
                 .onAppear{
                     sleepStore.getSleepDataFromUserDefaults()
                     sleepStore.getTargetDateFromUserDefaults()
-                    print(sleepStore.loadSleepDatasFromUserDefaults())
+                    //print(sleepStore.loadSleepDatasFromUserDefaults())
                     noticenter.requestNotiAuthorization()
+                    chartStore.updateEveryData(to: sleepStore.sleepData)
             }
         }
     }

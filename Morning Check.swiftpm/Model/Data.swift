@@ -92,6 +92,10 @@ enum SleepQuality: String, Codable {
     case Groggy
     case Sluggish
     case Unrested
+    
+    var capitalized: String {
+        rawValue.capitalized
+    }
 }
 
 enum SleepDisruptors: String, Codable {
@@ -99,6 +103,10 @@ enum SleepDisruptors: String, Codable {
     case energyDrink = "Energy Drink"
     case intenseExercise = "Intense Exercise"
     case lightExercise = "Light Exercise"
+    
+    var capitalized: String {
+        rawValue.capitalized
+    }
 }
 
 func distruptorEmoji (of dis: SleepDisruptors) -> String {

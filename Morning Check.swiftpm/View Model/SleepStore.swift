@@ -20,7 +20,7 @@ class SleepStore: ObservableObject, Observable {
     }
     
     var targetMarkSleep: Date {
-        return Date(timeInterval: -(8*60*60), since: targetMarkWakeUp)
+        return Date(timeInterval: -(9*60*60), since: targetMarkWakeUp)
     }
     
     init() {

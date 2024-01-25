@@ -1,15 +1,63 @@
 //
 //  SwiftUIView.swift
+//  
 //
-//
-//  Created by 이승준 on 1/22/24.
+//  Created by 이승준 on 1/25/24.
 //
 
 import SwiftUI
 import Charts
 
+struct BasicChartView: View {
+    
+    @EnvironmentObject private var sleepStore: SleepStore
+    @EnvironmentObject private var chartStore: ChartStore
+    
+    var body: some View {
+        VStack {
+            Chart {
+                ForEach (sleepStore.sleepData) { sleep in
+                    BarMark ( //Chart content that represents data using a single horizontal or vertical rule.
+                        x: .value("date",sleep.wakeUpDate, unit: .day),
+                        yStart: .value("WakeUp",sleep.markWakeUp),
+                        yEnd: .value("Sleep",sleep.markSleep),
+                        width: .ratio(0.3)
+                    )
+                    .foregroundStyle(qualityColor(sleep.sleepQuality))
+                }
+                BarMark (
+                    x: .value("Goal", Date(timeInterval: +(24*60*60), since: Date()), unit: .day),
+                    yStart: .value("WakeUp",sleepStore.targetMarkWakeUp),
+                    yEnd: .value("Sleep",sleepStore.targetMarkSleep),
+                    width: .ratio(0.3)
+                )
+                .foregroundStyle(.cyan)
+            }
+            .frame(minHeight: 300)
+            .chartYAxis(.automatic)
+        }
+    }
+}
+
+func qualityColor(_ num: Int) -> Color {
+    switch num {
+    case 0:
+        return Color("darkMode")
+    case 1:
+        return .red
+    case 2:
+        return .yellow
+    case 3:
+        return .green
+    case 4:
+        return .blue
+    default:
+        return .black
+    }
+}
+
 func date(year: Int, month: Int, day: Int, hour: Int, min: Int, sec: Int) -> Date {
-    Calendar.current.date(from: DateComponents(timeZone: TimeZone(identifier: "Asia/Seoul"), year: year, month: month, day: day, hour: hour, minute: min, second: sec)) ?? Date()
+    Calendar.current.date(from: DateComponents(timeZone: TimeZone(identifier: "UTC"), year: year, month: month, day: day, hour: hour, minute: min, second: sec)) ?? Date()
 }
 
 let sleepDataTemp = [
@@ -107,57 +155,7 @@ let sleepDataTemp = [
         sleepQuality: 2, distruptors: [], awakes: 1)
 ]
 
-struct SwiftChartsA: View {
-    
-    @EnvironmentObject private var sleepStore: SleepStore
-    
-    var body: some View {
-        ScrollView {
-            Chart {
-                ForEach (sleepStore.sleepData) { sleep in
-                    BarMark ( //Chart content that represents data using a single horizontal or vertical rule.
-                        x: .value("date",sleep.wakeUpDate, unit: .day),
-                        yStart: .value("WakeUp",sleep.markWakeUp),
-                        yEnd: .value("Sleep",sleep.markSleep),
-                        width: .ratio(0.3)
-                    )
-                    .foregroundStyle(qualiyColor(sleep.sleepQuality))
-                }
-                BarMark (
-                    x: .value("Goal", Date(timeInterval: +(24*60*60), since: Date()), unit: .day),
-                    yStart: .value("WakeUp",sleepStore.targetMarkWakeUp),
-                    yEnd: .value("Sleep",sleepStore.targetMarkSleep),
-                    width: .ratio(0.3)
-                )
-                .foregroundStyle(.cyan)
-
-            }
-            .frame(minHeight: 300)
-            //.chartYScale(type: .date)
-            .chartYAxis(.automatic)
-            
-        }
-    }
-}
-
-func qualiyColor(_ num: Int) -> Color {
-    switch num {
-    case 0:
-        return .black
-    case 1:
-        return .red
-    case 2:
-        return .yellow
-    case 3:
-        return .green
-    case 4:
-        return .blue
-    default:
-        return .black
-    }
-}
 
 #Preview {
-    SwiftChartsA()
-        .environmentObject(SleepStore())
+    BasicChartView()
 }

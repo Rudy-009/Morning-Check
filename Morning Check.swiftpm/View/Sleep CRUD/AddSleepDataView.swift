@@ -49,7 +49,8 @@ struct AddSleepDataView: View {
                                     //Pop sheet
                                     isShownSheet = false
                                 } else {
-                                    tabIndex = 0
+                                    isShowNonlogicalAlert = true
+                                    tabIndex = 1
                                 }
                             }
                         }

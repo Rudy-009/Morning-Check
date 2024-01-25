@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct MainTableView: View {
     
     @EnvironmentObject private var sleepStore: SleepStore
     @EnvironmentObject private var noticenter: NotificationManager
@@ -24,7 +24,7 @@ struct MainView: View {
                     Label("Open Chart", systemImage: "chart.bar.xaxis.ascending.badge.clock")
                 }
                 .sheet(isPresented: $isChartOpen, content: {
-                    SwiftChartsA()
+                    MainChartView()
                 })
                 
                 Button { //Notification Toggle
@@ -72,6 +72,7 @@ struct MainView: View {
                     AddSleepDataView(isShownSheet: $isShownSheet)
                 }
                 .presentationDetents([.medium, .large])
+                
             }
         }
     }

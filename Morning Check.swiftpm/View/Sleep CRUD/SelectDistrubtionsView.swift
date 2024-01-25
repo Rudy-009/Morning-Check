@@ -51,10 +51,8 @@ struct DistruptionSelectedButton: View {
         Button {
             if selected { //true => remove => false
                 self.selection.remove(distruptor)
-                print(selection)
             } else { //false => insert => true
                 self.selection.insert(distruptor)
-                print(selection)
             }
             selected.toggle()
         } label: {
@@ -63,7 +61,7 @@ struct DistruptionSelectedButton: View {
                     Text("\(explanationDis(of: distruptor))")
                     Text("\(emoji)")
                         .font(.system(size: 70))
-                    Text("\(String(distruptor.rawValue).uppercased())")
+                    Text("\(String(distruptor.capitalized))")
                         .foregroundStyle(.selection)
                 }
                 if selected {
