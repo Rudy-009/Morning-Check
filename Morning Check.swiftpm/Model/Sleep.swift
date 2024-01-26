@@ -3,7 +3,7 @@ import Foundation
 import SwiftUI
 import Charts
 
-struct Sleep : Identifiable, Codable {
+struct Sleep : Identifiable, Codable, Equatable {
     var id = UUID()
     var sleepDate: Date
     var wakeUpDate: Date
@@ -25,6 +25,14 @@ struct Sleep : Identifiable, Codable {
     
     var isMoreThanEightHours: Bool {
         return sleepDuration >= 3600*8 ? true : false
+    }
+    
+    var idealSleepDuration: Bool {
+        if 7*60*60 <= sleepDuration && sleepDuration <= 8*60*60 + 30*60 {
+            return true
+        } else {
+            return false
+        }
     }
     
     var markWakeUp: Date {

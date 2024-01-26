@@ -74,7 +74,7 @@ extension SleepStore { //For Sleep DateFormat
     
     func returnFormatted(_ date: Date) -> String {
         
-        dateFormatter.dateFormat = "MM-dd HH:mm a"
+        dateFormatter.dateFormat = "M-d HH:mm a"
         
         return dateFormatter.string(from: date)
     }

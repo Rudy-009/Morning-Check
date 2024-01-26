@@ -94,7 +94,7 @@ struct howManyTimesWakesWhileSleeping: View {
                     times -= 1
                 } label: {
                     Image(systemName: "minus.circle.fill")
-                        .foregroundStyle(times <= 0 ? .gray : .white)
+                        .foregroundStyle(times <= 0 ? .gray : .primary)
                         .scaledToFit()
                         .font(.system(size: heightOfButton))
                         .padding([.top], 0)
@@ -106,7 +106,7 @@ struct howManyTimesWakesWhileSleeping: View {
                     times += 1
                 } label: {
                     Image(systemName: "plus.circle.fill")
-                        .foregroundStyle(.foreground)
+                        .foregroundStyle(.primary)
                         .scaledToFit()
                         .font(.system(size: heightOfButton))
                         .padding([.top], 0)

@@ -17,10 +17,8 @@ struct DurationAndQualityView: View {
         VStack {
             Text("Correlation with Duration and Quality")
             
-            Chart{
-                ForEach(chartStore.durationAndQualityArray){ token in
-                    
-                    // 시:분 형식으로 시간을 나타내기 위한 코드
+            Chart {
+                ForEach(chartStore.durationAndQualityArray) { token in
                     BarMark(
                         x: .value("Quality", token.quality),
                         y: .value("Average", token.average)
@@ -44,6 +42,7 @@ struct DurationAndQualityView: View {
             .chartPlotStyle { plotArea in
                 plotArea.frame(height: 200)
             }
+            
         }
     }
 }

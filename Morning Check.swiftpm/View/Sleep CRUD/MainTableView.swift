@@ -18,6 +18,7 @@ struct MainTableView: View {
                 SleepDataTableView(selected: $selected.animation(.easeInOut))
             }
             .toolbar {
+                
                 Button {
                     isChartOpen = true
                 } label: {
@@ -99,7 +100,7 @@ struct SleepDataTableView: View {
                         .foregroundStyle(selected == sleep.id ? .white : .gray)
                 }
                 TableColumn("Duration") { sleep in
-                    Text("\(sleep.sleepDurationHours)H : \(sleep.sleepDurationMinutes)M")
+                    Text("\(sleep.sleepDurationHours)H : \(sleep.sleepDurationMinutes)M \(sleep.idealSleepDuration ? " 👍" : "")")
                 }
                 TableColumn("Distruptions") { sleep in
                     Text("\(sleep.emojis)")

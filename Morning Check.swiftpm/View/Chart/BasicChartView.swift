@@ -58,10 +58,6 @@ func qualityColor(_ num: Int) -> Color {
     }
 }
 
-func date(year: Int, month: Int, day: Int, hour: Int, min: Int, sec: Int) -> Date {
-    Calendar.current.date(from: DateComponents(timeZone: TimeZone(identifier: "UTC"), year: year, month: month, day: day, hour: hour, minute: min, second: sec)) ?? Date()
-}
-
 let sleepDataTemp = [
     Morning_Check.Sleep(
         sleepDate: date(year: 2024, month: 01, day: 23, hour: 01, min: 23, sec: 00),
