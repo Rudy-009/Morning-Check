@@ -29,20 +29,14 @@ struct DurationAndQualityView: View {
             .chartPlotStyle { plotArea in
                 plotArea.frame(height: 200)
             }
-            
-            Chart{
-                ForEach(chartStore.durationAndQualityArray){ token in
-                    PointMark (
-                        x: .value("Quality", token.quality ) ,
-                        y: .value("Average",  token.average)
-                    )
-                    .foregroundStyle(qualityColor(token.quality))
+            .chartYAxis {
+                AxisMarks() { _ in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel(format: .dateTime.month(.narrow), centered: true)
                 }
             }
-            .chartPlotStyle { plotArea in
-                plotArea.frame(height: 200)
-            }
-            
+            .padding()
         }
     }
 }

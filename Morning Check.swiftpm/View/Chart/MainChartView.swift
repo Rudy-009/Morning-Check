@@ -19,6 +19,8 @@ struct MainChartView: View {
                 .padding()
             DistruptorsAndQualityView()
                 .padding()
+            DurationAndQualityView()
+                .padding()
         }
         .onAppear{
             chartStore.updateDistruptorsAndQuality()

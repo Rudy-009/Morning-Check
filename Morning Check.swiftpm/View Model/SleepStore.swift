@@ -68,6 +68,10 @@ class SleepStore: ObservableObject, Observable {
         saveSleepDataToUserDefaults()
     }
     
+    func contains(where date: Date) -> Date? {
+        return nil
+    }
+    
 }
 
 extension SleepStore { //For Sleep DateFormat

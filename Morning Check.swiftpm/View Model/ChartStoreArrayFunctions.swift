@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 extension ChartStore {
     
     func updateWeekRealtedSleep(by newSleepDate: [Sleep], start: Int, end: Int) -> [Sleep] {
@@ -15,6 +14,14 @@ extension ChartStore {
         let todayComp = calender.dateComponents([.year, .weekOfYear], from: Date())
         var dateCompArray: [DateComponents] = []
         var result: [Sleep] = []
+        
+        if end == -1 {
+            for sleep in newSleepDate {
+                guard sleep.sleepDuration >= 4*60*60 else { continue }
+                result.append(sleep)
+            }
+            return result
+        }
         
         for week in start...end {
             let comp = DateComponents(year: todayComp.year, weekOfYear: todayComp.weekOfYear! - week)
@@ -32,11 +39,10 @@ extension ChartStore {
                 }
             }
         }
-        
-        return result
+        return result.sorted{ $0.wakeUpDate > $1.wakeUpDate }
     }
     
-    func getOnlySleepTime(of sleepArray: [Sleep]) -> [Date]{
+    func getOnlySleepTime(of sleepArray: [Sleep]) -> [Date] {
         var sleepTime: [Date] = []
         
         for sleep in sleepArray {
@@ -46,7 +52,7 @@ extension ChartStore {
         return sleepTime
     }
     
-    func getOnlyWakeUpTime(of sleepArray: [Sleep]) -> [Date]{
+    func getOnlyWakeUpTime(of sleepArray: [Sleep]) -> [Date] {
         var wakeUpTime: [Date] = []
         
         for sleep in sleepArray {
@@ -56,7 +62,13 @@ extension ChartStore {
         return wakeUpTime
     }
     
-    
-    
-    
+    func getWakeUpTimeAndUUID(of sleepArray: [Sleep]) -> [(Date, UUID)] {
+        var wakeUpTimeWithUUID: [(Date, UUID)] = []
+        
+        for sleep in sleepArray {
+            wakeUpTimeWithUUID.append((sleep.wakeUpDate, sleep.id))
+        }
+        
+        return wakeUpTimeWithUUID
+    }
 }

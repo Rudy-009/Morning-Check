@@ -62,7 +62,6 @@ struct Sleep : Identifiable, Codable, Equatable {
         }
     }
     
-    
     var yesterdayAt7PM: Date {
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day], from: Date())
@@ -90,6 +89,23 @@ struct Sleep : Identifiable, Codable, Equatable {
                 result += "\(distruptorEmoji(of: d)) "
             }
             return result
+        }
+    }
+    
+    var qualityString: String {
+        switch sleepQuality {
+        case 0:
+            return "Unrested"
+        case 1:
+            return "Sluggish"
+        case 2:
+            return "Groggy"
+        case 3:
+            return "Invigorated"
+        case 4:
+            return "Refreshed"
+        default:
+            return ""
         }
     }
     

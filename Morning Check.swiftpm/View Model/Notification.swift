@@ -23,11 +23,9 @@ class NotificationManager : ObservableObject {
                     }
                     // Enable or disable features based on the authorization.
                 }
-                print("notDetermined or denied")
             case .denied:
                 break
             case .authorized: //Already Allowed
-                print("already authorized")
                 break
             case .provisional: //The application is provisionally authorized to post noninterruptive user notifications.
                 break

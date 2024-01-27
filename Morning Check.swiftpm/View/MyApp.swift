@@ -20,7 +20,8 @@ struct MyApp: App {
                     //print(sleepStore.loadSleepDatasFromUserDefaults())
                     noticenter.requestNotiAuthorization()
                     chartStore.updateEveryData(to: sleepStore.sleepData)
-            }
+                }
         }
     }
 }
+
