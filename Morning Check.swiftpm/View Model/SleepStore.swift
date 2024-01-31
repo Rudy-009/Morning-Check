@@ -165,6 +165,10 @@ extension SleepStore { //For UserDefault
     }
     
     
+    func getAllDataFromUserDefaults() {
+        getSleepDataFromUserDefaults()
+        getTargetDateFromUserDefaults()
+    }
     
 }
 

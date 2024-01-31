@@ -21,7 +21,7 @@ struct DistruptorsAndQualityView: View {
                 ForEach(chartStore.distruptorAndQualityArray) { token in
                     BarMark(
                         x: .value("average", token.averageByDistruptors),
-                        y: .value("distruptors", token.distruptor.rawValue + " " + distruptorEmoji(of: token.distruptor))
+                        y: .value("distruptors", token.distruptor.rawValue + " " + token.distruptor.emoji)
                     )
                     .foregroundStyle(qualityColorDouble(token.averageByDistruptors))
                 }

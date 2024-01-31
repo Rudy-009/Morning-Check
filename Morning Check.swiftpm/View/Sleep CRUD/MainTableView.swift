@@ -5,12 +5,13 @@ struct MainTableView: View {
     
     @EnvironmentObject private var sleepStore: SleepStore
     @EnvironmentObject private var noticenter: NotificationManager
+    @EnvironmentObject private var resetBedStore: ResetBedStore
     
     @State private var isShownSheet: Bool = false
     @State private var isShownGoalSheet: Bool = false
-    @State private var isChartOpen: Bool = false
     @State private var selected: Sleep.ID?
     @State private var notificationToggle: Bool = true
+    @State private var isShowLaundryAlert: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -18,15 +19,13 @@ struct MainTableView: View {
                 SleepDataTableView(selected: $selected.animation(.easeInOut))
             }
             .toolbar {
-                
                 Button {
-                    isChartOpen = true
+                    resetBedStore.resetedBedToday()
                 } label: {
-                    Label("Open Chart", systemImage: "chart.bar.xaxis.ascending.badge.clock")
+                    Label("Open Chart", systemImage: "bed.double.fill")
                 }
-                .sheet(isPresented: $isChartOpen, content: {
-                    MainChartView()
-                })
+                .foregroundColor(resetBedStore.getColor())
+                
                 
                 Button { //Notification Toggle
                     notificationToggle.toggle()
@@ -75,6 +74,16 @@ struct MainTableView: View {
                 .presentationDetents([.medium, .large])
                 
             }
+            .alert(isPresented: $isShowLaundryAlert) {
+                Alert(
+                    title: Text(K.AlertMessage.haveYouDone),
+                    primaryButton: Alert.Button.cancel(),
+                    secondaryButton: Alert.Button.destructive(
+                        Text("Yes!"),
+                        action: resetBedStore.resetedBedToday)
+                )
+            }
+
         }
     }
 }

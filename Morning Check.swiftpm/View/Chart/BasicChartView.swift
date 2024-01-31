@@ -39,11 +39,12 @@ struct basicChart: View {
         if let rawSelectedDate {
             return chartStore.allWakeUpTime.first(where: {
                 let endOfDay = chartStore.allWakeUpTime.first!
-                return ($0...endOfDay.addingTimeInterval(24*60*60)).contains(rawSelectedDate)
+                return ($0...endOfDay.addingTimeInterval(24*60*60*3)).contains(rawSelectedDate)
             })
         }
         return nil
     }
+    
     
     var selectedSleep: Sleep? {
         if let selectedDate {
@@ -172,9 +173,10 @@ struct basicChart: View {
             VStack(alignment: .leading) {
                 Text("Sleep : \(sleepStore.returnFormatted(selectedSleep.sleepDate))")
                 Text("Wake  : \(sleepStore.returnFormatted(selectedSleep.wakeUpDate))")
-                Text("\(selectedSleep.sleepDurationHours)H : \(selectedSleep.sleepDurationMinutes)M")
+                Text("\(selectedSleep.sleepDurationHours)H : \(selectedSleep.sleepDurationMinutes)M \(selectedSleep.idealSleepDuration ? " 👍" : "")")
                 SingleBattery(num: selectedSleep.sleepQuality)
                     .foregroundStyle(qualityColor(selectedSleep.sleepQuality))
+                Text("\(selectedSleep.emojis)")
                 //Text("\(selectedDate)")
             }
             .padding(6)
@@ -187,7 +189,6 @@ struct basicChart: View {
         }
     }
 }
-
 
 func qualityColor(_ num: Int) -> Color {
     switch num {

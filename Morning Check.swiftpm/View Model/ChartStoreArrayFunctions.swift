@@ -17,7 +17,7 @@ extension ChartStore {
         
         if end == -1 {
             for sleep in newSleepDate {
-                guard sleep.sleepDuration >= 4*60*60 else { continue }
+                //guard sleep.sleepDuration >= 4*60*60 else { continue }
                 result.append(sleep)
             }
             return result

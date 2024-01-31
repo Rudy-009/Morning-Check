@@ -86,7 +86,7 @@ struct Sleep : Identifiable, Codable, Equatable {
         } else {
             var result: String = ""
             for d in distruptors {
-                result += "\(distruptorEmoji(of: d)) "
+                result += "\(d.emoji) "
             }
             return result
         }

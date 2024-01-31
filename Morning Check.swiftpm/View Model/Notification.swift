@@ -61,8 +61,8 @@ class NotificationManager : ObservableObject {
     
     func addNotificationAtGoalTime(with time: Date) {
         deleteAllNotifications()
-        let title: String = "Good Morning!"
-        let subtitle: String = "Time to Record Your Wake-up and Sleep Time"
+        let title: String = K.NotificationMessage.basicTitle
+        let subtitle: String = K.NotificationMessage.basicText
         
         let content = UNMutableNotificationContent()
         content.title = title

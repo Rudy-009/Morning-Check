@@ -44,7 +44,7 @@ struct DistruptionSelectedButton: View {
     
     let distruptor: SleepDisruptors
     var emoji: String {
-        return distruptorEmoji(of: distruptor)
+        return distruptor.emoji
     }
     
     var body: some View {
@@ -58,7 +58,7 @@ struct DistruptionSelectedButton: View {
         } label: {
             ZStack {
                 VStack {
-                    Text("\(explanationDis(of: distruptor))")
+                    Text("\(distruptor.explanation)")
                     Text("\(emoji)")
                         .font(.system(size: 70))
                     Text("\(String(distruptor.capitalized))")
@@ -74,7 +74,6 @@ struct DistruptionSelectedButton: View {
             .padding(30)
         }
     }
-    
 }
 
 struct howManyTimesWakesWhileSleeping: View {
