@@ -10,6 +10,7 @@ import SwiftUI
 enum RootScreen: String {
     case table
     case chart
+    case weekly
     
     var title: String {
         rawValue.capitalized
@@ -37,6 +38,7 @@ extension MainSplitView {
         List(selection: $selection) {
             link(to: .table)
             link(to: .chart)
+            link(to: .weekly)
         }
     }
 
@@ -45,6 +47,7 @@ extension MainSplitView {
             Text(page.title)
         }
     }
+    
 }
 
 extension MainSplitView {
@@ -63,6 +66,8 @@ extension MainSplitView {
         switch screen {
         case .table: MainTableView()
         case .chart: MainChartView()
+        case .weekly: WeekCompareDetail()
         }
     }
+    
 }

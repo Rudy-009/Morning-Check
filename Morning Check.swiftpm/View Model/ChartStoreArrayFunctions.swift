@@ -39,8 +39,11 @@ extension ChartStore {
                 }
             }
         }
+        
         return result.sorted{ $0.wakeUpDate > $1.wakeUpDate }
     }
+    
+    
     
     func getOnlySleepTime(of sleepArray: [Sleep]) -> [Date] {
         var sleepTime: [Date] = []

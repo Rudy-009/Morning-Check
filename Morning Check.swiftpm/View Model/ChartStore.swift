@@ -12,41 +12,39 @@ class ChartStore: ObservableObject {
     @Published var distruptorAndQualityArray: [DistruptorAndQuality] = []
     @Published var durationAndQualityArray: [DurationAndQuality] = []
     
-    private var thisWeekSleep: [Sleep] = []
-    private var lastWeekSleep: [Sleep] = []
-    //private var pastThirdWeekSleep: [Sleep] = []
-    private var pastFourthWeekSleep: [Sleep] = []
+    @Published var thisWeekSleep: [Sleep] = []
+    @Published var lastWeekSleep: [Sleep] = []
+    @Published var pastThirdWeekSleep: [Sleep] = []
+    @Published var pastFourthWeekSleep: [Sleep] = []
     
-    private var twoWeekSleep: [Sleep] = []
-    private var fourWeeksSleep: [Sleep] = []
-    private var allSleep: [Sleep] = []
+//    var twoWeeksSleep: [Sleep] = []
+//    var fourWeeksSleep: [Sleep] = []
+    var allSleep: [Sleep] = []
     
     private var overThePastTwoWeeksSleep: [Sleep] = []
     private var duringTheLastTwoWeeksSleep: [Sleep] = []
     
-    private var thisWeekSleepTime: [Date] = []
-    private var thisWeekWakeUpTime: [Date] = []
-    private var lastWeekSleepTime: [Date] = []
-    private var lastWeekWakeUpTime: [Date] = []
-    //private var pastThirdWeekSleepTime: [Date] = []
-    //private var pastThirdWeekWakeUpTime: [Date] = []
-    private var pastFourthWeekSleepTime: [Date] = []
-    private var pastFourthWeekWakeUpTime: [Date] = []
+    @Published var thisWeekSleepTime: [Date] = []
+    @Published var thisWeekWakeUpTime: [Date] = []
+    @Published var lastWeekSleepTime: [Date] = []
+    @Published var lastWeekWakeUpTime: [Date] = []
+    @Published var pastThirdWeekSleepTime: [Date] = []
+    @Published var pastThirdWeekWakeUpTime: [Date] = []
+    @Published var pastFourthWeekSleepTime: [Date] = []
+    @Published var pastFourthWeekWakeUpTime: [Date] = []
     
-    private var twoWeekSleepTime: [Date] = []
-    private var twoWeekWakeUpTime: [Date] = []
-    private var fourWeeksSleepTime: [Date] = []
-    private var fourWeeksWakeUpTime: [Date] = []
+    @Published var weekData: [Week] = []
+    
+//    private var twoWeeksSleepTime: [Date] = []
+//    private var twoWeeksWakeUpTime: [Date] = []
+//    private var fourWeeksSleepTime: [Date] = []
+//    private var fourWeeksWakeUpTime: [Date] = []
     
     var allSleepTime: [Date] = []
     var allWakeUpTime: [Date] = []
     
-    var allSleepTimeWithUUID: [(Date, UUID)] = []
-    var allWakeUpTimeWithUUID: [(Date, UUID)] = []
     
-    init() {
-        
-    }
+    init() {}
     
     func refreshChartData(to newSleepDate: [Sleep]) {
         self.sleepData = newSleepDate
@@ -64,52 +62,56 @@ class ChartStore: ObservableObject {
         self.lastWeekWakeUpTime = getOnlyWakeUpTime(of: self.lastWeekSleep)
     }
     
-//    func updatePastThirdWeekSleep(by newSleepDate: [Sleep]) {
-////        self.pastThirdWeekSleep = updateWeekRealtedSleep(by: newSleepDate, start: 1, end: 1)
-////        self.pastThirdWeekSleepTime = getOnlySleepTime(of: self.pastThirdWeekSleep)
-////        self.pastThirdWeekWakeUpTime = getOnlyWakeUpTime(of: self.pastThirdWeekSleep)
-//    }
+    func updatePastThirdWeekSleep(by newSleepDate: [Sleep]) {
+        self.pastThirdWeekSleep = updateWeekRealtedSleep(by: newSleepDate, start: 2, end: 2)
+        self.pastThirdWeekSleepTime = getOnlySleepTime(of: self.pastThirdWeekSleep)
+        self.pastThirdWeekWakeUpTime = getOnlyWakeUpTime(of: self.pastThirdWeekSleep)
+    }
     
     func updatePastFourthWeekSleep(by newSleepDate: [Sleep]) {
-        self.pastFourthWeekSleep = updateWeekRealtedSleep(by: newSleepDate, start: 1, end: 1)
+        self.pastFourthWeekSleep = updateWeekRealtedSleep(by: newSleepDate, start: 3, end: 3)
         self.pastFourthWeekSleepTime = getOnlySleepTime(of: self.pastFourthWeekSleep)
         self.pastFourthWeekWakeUpTime = getOnlyWakeUpTime(of: self.pastFourthWeekSleep)
     }
     
-    func twoLastWeekSleep(by newSleepDate: [Sleep]) {
-        self.twoWeekSleep =  updateWeekRealtedSleep(by: newSleepDate, start: 1, end: 2)
-        self.twoWeekSleepTime = getOnlySleepTime(of: self.twoWeekSleep)
-        self.twoWeekWakeUpTime = getOnlyWakeUpTime(of: self.twoWeekSleep)
-    }
-    
-    func updateFourWeeksSleep(by newSleepDate: [Sleep]) {
-        self.fourWeeksSleep = updateWeekRealtedSleep(by: newSleepDate, start: 0, end: 3)
-        self.fourWeeksSleepTime = getOnlySleepTime(of: self.fourWeeksSleep)
-        self.fourWeeksWakeUpTime = getOnlyWakeUpTime(of: self.fourWeeksSleep)
-    }
+//    func twoLastWeekSleep(by newSleepDate: [Sleep]) {
+//        self.twoWeeksSleep =  updateWeekRealtedSleep(by: newSleepDate, start: 1, end: 2)
+//        self.twoWeeksSleepTime = getOnlySleepTime(of: self.twoWeeksSleep)
+//        self.twoWeeksWakeUpTime = getOnlyWakeUpTime(of: self.twoWeeksSleep)
+//    }
+//    
+//    func updateFourWeeksSleep(by newSleepDate: [Sleep]) {
+//        self.fourWeeksSleep = updateWeekRealtedSleep(by: newSleepDate, start: 0, end: 3)
+//        self.fourWeeksSleepTime = getOnlySleepTime(of: self.fourWeeksSleep)
+//        self.fourWeeksWakeUpTime = getOnlyWakeUpTime(of: self.fourWeeksSleep)
+//    }
     
     func updateAllWeeksSleep(by newSleepDate: [Sleep]) {
         self.allSleep = updateWeekRealtedSleep(by: newSleepDate, start: 0, end: -1)
         self.allSleepTime = getOnlySleepTime(of: self.allSleep)
         self.allWakeUpTime = getOnlyWakeUpTime(of: self.allSleep)
-        
-        self.allWakeUpTimeWithUUID = getWakeUpTimeAndUUID(of: self.allSleep)
+    }
+    
+    func updateWeekData() {
+        self.updateWeekDataOriginal()
     }
     
     func updateAllWeekSleep(by newSleepDate: [Sleep]) {
         self.updateThisWeekSleep(by: newSleepDate)
         self.updateLastWeekSleep(by: newSleepDate)
-        //self.updatePastThirdWeekSleep(by: newSleepDate)
+        self.updatePastThirdWeekSleep(by: newSleepDate)
         self.updatePastFourthWeekSleep(by: newSleepDate)
-        self.twoLastWeekSleep(by: newSleepDate)
-        self.updateFourWeeksSleep(by: newSleepDate)
+        //self.twoLastWeekSleep(by: newSleepDate)
+        //self.updateFourWeeksSleep(by: newSleepDate)
         self.updateAllWeeksSleep(by: newSleepDate)
     }
+
     
     func updateEveryData(to newSleepDate: [Sleep]) {
         self.refreshChartData(to: newSleepDate)
         self.updateDistruptorsAndQuality()
         self.updateAllWeekSleep(by: newSleepDate)
+        self.updateWeekData()
     }
     
     func sleep(which targetArray: [Sleep], has date: Date) -> Sleep? {

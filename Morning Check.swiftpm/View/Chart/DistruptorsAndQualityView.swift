@@ -16,7 +16,8 @@ struct DistruptorsAndQualityView: View {
     var body: some View {
         VStack {
             Text("Correlation with Distruptors and Sleep Quality")
-                //.font(.system(size: 10))
+                .font(.title2.bold())
+                .foregroundColor(.primary)
             Chart {
                 ForEach(chartStore.distruptorAndQualityArray) { token in
                     BarMark(
@@ -30,6 +31,8 @@ struct DistruptorsAndQualityView: View {
             .chartPlotStyle { plotArea in
                 plotArea.frame(height: 200)
             }
+            Text(" ")
+            Text(" ")
         }
     }
 }

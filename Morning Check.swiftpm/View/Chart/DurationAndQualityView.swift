@@ -27,7 +27,7 @@ struct DurationAndQualityView: View {
                 }
             }
             .chartPlotStyle { plotArea in
-                plotArea.frame(height: 200)
+                plotArea.frame(height: K.Chart.basicHeight)
             }
             .chartYAxis {
                 AxisMarks() { _ in

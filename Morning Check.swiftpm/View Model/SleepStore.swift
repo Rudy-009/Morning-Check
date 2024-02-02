@@ -82,6 +82,13 @@ extension SleepStore { //For Sleep DateFormat
         
         return dateFormatter.string(from: date)
     }
+    
+    func hourMinuteFormatted(_ date: Date)  -> String {
+        
+        dateFormatter.dateFormat = "HH:mm a"
+        
+        return dateFormatter.string(from: date)
+    }
 }
 
 extension SleepStore { //For Edge Case

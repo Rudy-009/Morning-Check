@@ -29,4 +29,7 @@ struct K {
         static let haveYouDone =  "Have you done your bedding laundry"
     }
     
+    struct Chart {
+        static let basicHeight: CGFloat = 200
+    }
 }

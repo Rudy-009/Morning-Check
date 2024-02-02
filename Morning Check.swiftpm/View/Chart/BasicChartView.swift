@@ -45,7 +45,6 @@ struct basicChart: View {
         return nil
     }
     
-    
     var selectedSleep: Sleep? {
         if let selectedDate {
             return chartStore.sleep(which: sleepStore.sleepData, has: selectedDate)
