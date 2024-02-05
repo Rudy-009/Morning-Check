@@ -191,6 +191,8 @@ struct basicChart: View {
 
 func qualityColor(_ num: Int) -> Color {
     switch num {
+    case -1:
+        return Color(.systemBackground)
     case 0:
         return Color("darkMode")
     case 1:

@@ -24,6 +24,7 @@ extension ChartStore {
     }
     
     func updateWeekDataOriginal() {
+        
         self.weekData.append(Week(name: "This Week", weekSleep: self.thisWeekSleep, wakeUpData: self.thisWeekWakeUpTime, sleepData: self.thisWeekSleepTime))
         
         self.weekData.append(Week(name: "Last Week", weekSleep: self.lastWeekSleep, wakeUpData: self.lastWeekWakeUpTime, sleepData: self.lastWeekSleepTime))

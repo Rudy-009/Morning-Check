@@ -36,6 +36,8 @@ struct SleepQualityToken: View {
                 return .red
             case nil:
                 return .primary
+            case .some(.Hide):
+                return Color(.systemBackground)
             }
         }
     }

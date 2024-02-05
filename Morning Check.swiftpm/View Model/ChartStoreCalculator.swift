@@ -9,8 +9,41 @@ import SwiftUI
 
 extension ChartStore {
     
+    func sleepArrayForPreview(of sleepArray: [Sleep]) -> [Sleep] {
+        
+        let calendar = Calendar.current
+        var result: [Sleep] = []
+        
+        let existWeekDays = sleepArray.map{ calendar.dateComponents([ .weekday ], from: $0.wakeUpDate).weekday }
+        
+        let todayComp = calendar.dateComponents([.year, .weekOfYear], from: Date())
+        
+        for day in 1...7 {
+            result.append(
+                Sleep(
+                    sleepDate: date(year: todayComp.year!, weekOfYear: todayComp.weekOfYear!, weekday: day),
+                    wakeUpDate: date(year: todayComp.year!, weekOfYear: todayComp.weekOfYear!, weekday: day),
+                    sleepQuality: -1, distruptors: [], awakes: -1)
+            )
+        }
+        
+        result.append(contentsOf: sleepArray)
+        
+        func date(year: Int, weekOfYear: Int, weekday: Int) -> Date {
+            Calendar.current.date(
+                from: DateComponents( year: year, weekday: weekday, weekOfYear: weekOfYear)) ?? Date()
+        }
+        
+        return result
+    }
+    
     func sleepTimeAverage(of dateArray: [Date]) -> Date {
         //let date: Date = Date()
+        
+        if dateArray.isEmpty {
+            return Date()
+        }
+        
         let calendar = Calendar.current
         
         var result: Int = 0
@@ -32,6 +65,11 @@ extension ChartStore {
     
     func wakeUpTimeAverage(of dateArray: [Date]) -> Date {
         //let date: Date = Date()
+        
+        if dateArray.isEmpty {
+            return Date()
+        }
+        
         let calendar = Calendar.current
         
         var result: Int = 0

@@ -19,7 +19,7 @@ struct WeekComparePreview: View {
                 .font(.title2.bold())
                 .foregroundColor(.primary)
             Chart {
-                ForEach(chartStore.thisWeekSleep) { sleep in
+                ForEach(chartStore.sleepArrayForPreview(of: chartStore.thisWeekSleep)) { sleep in
                     BarMark ( //Chart content that represents data using a single horizontal or vertical rule.
                         x: .value("date",sleep.wakeUpDate, unit: .day),
                         yStart: .value("WakeU p",sleep.markWakeUp),
@@ -45,9 +45,13 @@ struct WeekComparePreview: View {
                 plotArea.frame(height: K.Chart.basicHeight)
             }
             .padding()
-            Text("Average")
-            Text("WakeUp: \(sleepStore.hourMinuteFormatted(chartStore.sleepTimeAverage(of: chartStore.thisWeekSleepTime))) Sleep: \(sleepStore.hourMinuteFormatted(chartStore.wakeUpTimeAverage(of: chartStore.thisWeekWakeUpTime)))")
-                .foregroundStyle(Color.accentColor)
+            if chartStore.thisWeekSleep.isEmpty {
+                
+            } else {
+                Text("Average")
+                Text("WakeUp: \(sleepStore.hourMinuteFormatted(chartStore.sleepTimeAverage(of: chartStore.thisWeekSleepTime))) Sleep: \(sleepStore.hourMinuteFormatted(chartStore.wakeUpTimeAverage(of: chartStore.thisWeekWakeUpTime)))")
+                    .foregroundStyle(Color.accentColor)
+            }
         }
     }
 }

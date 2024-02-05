@@ -16,6 +16,7 @@ enum SleepQuality: String, Codable {
     case Groggy
     case Sluggish
     case Unrested
+    case Hide
 
     var color: Color {
         switch self {
@@ -29,6 +30,8 @@ enum SleepQuality: String, Codable {
                 .red
         case .Unrested:
                 Color("darkMode")
+        case .Hide:
+            Color(.systemBackground)
         }
     }
     
@@ -44,6 +47,8 @@ enum SleepQuality: String, Codable {
             1
         case .Unrested:
             0
+        case .Hide:
+            -1
         }
     }
 }
