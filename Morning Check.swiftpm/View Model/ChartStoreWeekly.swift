@@ -13,12 +13,16 @@ extension ChartStore {
         let calender = Calendar.current
         let todayComp = calender.dateComponents([.year, .weekOfYear, .weekday , .month, .day], from: Date())
         
-        let start = DateComponents(year: todayComp.year, weekday: 1  ,weekOfYear: todayComp.weekOfYear! - week)
+        let start = date(
+            year: todayComp.year!, weekOfYear: todayComp.weekOfYear! - week, weekday: 1)
         
-        let end = DateComponents(year: todayComp.year, month: todayComp.month, day: todayComp.day, weekday: 7  ,weekOfYear: todayComp.weekOfYear! - week)
+        let end = date(
+            year: todayComp.year!, weekOfYear: todayComp.weekOfYear! - week, weekday: 7)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M.d.YY"
         
-        let from = "\(start.month) \(start.day) \(start.year)"
-        let to = "\(end.month) \(end.day) \(end.year)"
+        let from = dateFormatter.string(from: start)
+        let to = dateFormatter.string(from: end)
         
         return "\(from) ~ \(to)"
     }
@@ -32,6 +36,8 @@ extension ChartStore {
         self.weekData.append(Week(name: weekName(of: 2), weekSleep: self.pastThirdWeekSleep, wakeUpData: self.pastThirdWeekWakeUpTime, sleepData: self.pastThirdWeekSleepTime))
         
         self.weekData.append(Week(name: weekName(of: 3), weekSleep: self.pastFourthWeekSleep, wakeUpData: self.pastFourthWeekWakeUpTime, sleepData: self.pastFourthWeekSleepTime))
+        
+        self.weekData.append(Week(name: weekName(of: 4), weekSleep: self.pastFifthWeekSleep, wakeUpData: self.pastFifthWeekWakeUpTime, sleepData: self.pastFifthWeekSleepTime))
         
     }
     

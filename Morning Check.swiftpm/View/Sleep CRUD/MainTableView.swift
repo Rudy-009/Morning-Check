@@ -19,14 +19,6 @@ struct MainTableView: View {
                 SleepDataTableView(selected: $selected.animation(.easeInOut))
             }
             .toolbar {
-                Button {
-                    resetBedStore.resetedBedToday()
-                } label: {
-                    Label("Open Chart", systemImage: "bed.double.fill")
-                }
-                .foregroundColor(resetBedStore.getColor())
-                
-                
                 Button { //Notification Toggle
                     notificationToggle.toggle()
                     if notificationToggle { //Add Notification Again

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct K {
     
@@ -31,5 +32,18 @@ struct K {
     
     struct Chart {
         static let basicHeight: CGFloat = 200
+        
+        static let detailHeight: CGFloat = 400
+    }
+    
+    struct Font {
+        static let weekCompareDetailButtonSize: CGFloat = 50
+        
+        static let weekCompareDetailTitleSize: CGFloat = 50
+        
+    }
+    
+    struct Colors {
+        static let chartDetailToeknViewBackground = Color("detailBackground")
     }
 }

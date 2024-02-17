@@ -12,6 +12,7 @@ extension ChartStore {
     func updateWeekRealtedSleep(by newSleepDate: [Sleep], start: Int, end: Int) -> [Sleep] {
         let calender = Calendar.current
         let todayComp = calender.dateComponents([.year, .weekOfYear], from: Date())
+        
         var dateCompArray: [DateComponents] = []
         var result: [Sleep] = []
         
@@ -43,8 +44,6 @@ extension ChartStore {
         return result.sorted{ $0.wakeUpDate > $1.wakeUpDate }
     }
     
-    
-    
     func getOnlySleepTime(of sleepArray: [Sleep]) -> [Date] {
         var sleepTime: [Date] = []
         
@@ -74,4 +73,5 @@ extension ChartStore {
         
         return wakeUpTimeWithUUID
     }
+    
 }

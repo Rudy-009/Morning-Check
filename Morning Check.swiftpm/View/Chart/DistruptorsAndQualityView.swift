@@ -15,7 +15,7 @@ struct DistruptorsAndQualityView: View {
     
     var body: some View {
         VStack {
-            Text("Correlation with Distruptors and Sleep Quality")
+            Text("Correlation between Distruptors and Sleep Quality")
                 .font(.title2.bold())
                 .foregroundColor(.primary)
             Chart {

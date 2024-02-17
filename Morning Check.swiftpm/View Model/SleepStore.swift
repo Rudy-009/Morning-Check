@@ -89,6 +89,12 @@ extension SleepStore { //For Sleep DateFormat
         
         return dateFormatter.string(from: date)
     }
+    
+    func monthDayYearFormatted(_ date: Date) -> String {
+        dateFormatter.dateFormat = "MM:DD:YY"
+        
+        return dateFormatter.string(from: date)
+    }
 }
 
 extension SleepStore { //For Edge Case
@@ -128,6 +134,7 @@ extension SleepStore { //For UserDefault
             }
         } else {
             print("Error while decode to Sleep Data")
+            return tempSleepData
         }
         return []
     }
@@ -147,12 +154,12 @@ extension SleepStore { //For UserDefault
             if let savedObject = try? decoder.decode(Date.self, from: savedData) {
                 return savedObject
             } else {
-                print("Error while decode to [Sleep]")
+                print("Error while decode to Target Date")
             }
         } else {
             print("Error while decode to Target Data")
         }
-        return Date()
+        return date(hour: 09, min: 00)
     }
     
     func saveTargetDateToUserDefaults() {

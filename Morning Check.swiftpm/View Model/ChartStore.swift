@@ -16,6 +16,7 @@ class ChartStore: ObservableObject {
     @Published var lastWeekSleep: [Sleep] = []
     @Published var pastThirdWeekSleep: [Sleep] = []
     @Published var pastFourthWeekSleep: [Sleep] = []
+    @Published var pastFifthWeekSleep: [Sleep] = []
     
 //    var twoWeeksSleep: [Sleep] = []
 //    var fourWeeksSleep: [Sleep] = []
@@ -32,6 +33,8 @@ class ChartStore: ObservableObject {
     @Published var pastThirdWeekWakeUpTime: [Date] = []
     @Published var pastFourthWeekSleepTime: [Date] = []
     @Published var pastFourthWeekWakeUpTime: [Date] = []
+    @Published var pastFifthWeekSleepTime: [Date] = []
+    @Published var pastFifthWeekWakeUpTime: [Date] = []
     
     @Published var weekData: [Week] = []
     
@@ -74,6 +77,12 @@ class ChartStore: ObservableObject {
         self.pastFourthWeekWakeUpTime = getOnlyWakeUpTime(of: self.pastFourthWeekSleep)
     }
     
+    func updatePastFifthWeekSleep(by newSleepDate: [Sleep]) {
+        self.pastFifthWeekSleep = updateWeekRealtedSleep(by: newSleepDate, start: 4, end: 4)
+        self.pastFifthWeekSleepTime = getOnlySleepTime(of: self.pastFifthWeekSleep)
+        self.pastFifthWeekWakeUpTime = getOnlyWakeUpTime(of: self.pastFifthWeekSleep)
+    }
+    
 //    func twoLastWeekSleep(by newSleepDate: [Sleep]) {
 //        self.twoWeeksSleep =  updateWeekRealtedSleep(by: newSleepDate, start: 1, end: 2)
 //        self.twoWeeksSleepTime = getOnlySleepTime(of: self.twoWeeksSleep)
@@ -101,17 +110,18 @@ class ChartStore: ObservableObject {
         self.updateLastWeekSleep(by: newSleepDate)
         self.updatePastThirdWeekSleep(by: newSleepDate)
         self.updatePastFourthWeekSleep(by: newSleepDate)
+        self.updatePastFifthWeekSleep(by: newSleepDate)
         //self.twoLastWeekSleep(by: newSleepDate)
         //self.updateFourWeeksSleep(by: newSleepDate)
         self.updateAllWeeksSleep(by: newSleepDate)
     }
 
-    
     func updateEveryData(to newSleepDate: [Sleep]) {
         self.refreshChartData(to: newSleepDate)
         self.updateDistruptorsAndQuality()
         self.updateAllWeekSleep(by: newSleepDate)
         self.updateWeekData()
+        self.updateWeekDataOriginal()
     }
     
     func sleep(which targetArray: [Sleep], has date: Date) -> Sleep? {
